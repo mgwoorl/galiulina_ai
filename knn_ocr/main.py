@@ -69,7 +69,6 @@ def load_training_data(training_dir):
                     
                 target_region = max(regions, key=lambda r: r.area)
 
-                # Extract features
                 feature_vector = extract_features(target_region)
                 features.append(feature_vector)
                 labels_list.append(label_idx)
