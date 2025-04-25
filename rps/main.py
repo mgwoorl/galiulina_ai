@@ -67,44 +67,36 @@ while cap.isOpened():
 
     if state == "wait":
         timer = round(time.time() - prev_time, 1)
-    if timer >= 5:
-        timer = 5
-        state = "result"
-
-        if state == "wait":
+        if timer >= 5:
             state = "result"
+            curr_time = time.time()
+
             if player1_hand == player2_hand:
                 game_result = "draw"
-
             elif player1_hand == "rock":
                 if player2_hand == "scissors":
                     game_result = "win player 1"
-
                 elif player2_hand == "paper":
                     game_result = "win player 2"
-
             elif player1_hand == "paper":
                 if player2_hand == "rock":
                     game_result = "win player 1"
-
                 elif player2_hand == "scissors":
                     game_result = "win player 2"
-
             elif player1_hand == "scissors":
                 if player2_hand == "paper":
                     game_result = "win player 1"
-
                 elif player2_hand == "rock":
                     game_result = "win player 2"
 
-            curr_time = time.time()
-
+    if state == "result":
         cv2.putText(frame, f"{game_result}", (20, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-    if state == "result" and (time.time() - curr_time) >= 5:
-        state = "idle"
-        game_result = ""
+        if (time.time() - curr_time) >= 5:
+            state = "idle"
+            game_result = ""
+            timer = 0
 
     cv2.imshow("YOLO", frame)
 
